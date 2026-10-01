@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Risk Analyzer | IKS Individual Project</title>
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">SR</span><div><h1>Study Risk Analyzer</h1><p>Smart academic self-assessment</p></div></div>
+    <button id="resetBtn" class="ghost">Reset</button>
+  </header>
+
+  <main class="container">
+    <section class="hero card">
+      <div>
+        <span class="badge">TY IT • IKS Individual Project</span>
+        <h2>Understand your study risk before exams.</h2>
+        <p>Enter your academic and study-habit details. The analyzer estimates a study-risk level and generates practical actions and a short revision plan.</p>
+      </div>
+      <div class="hero-stat"><strong id="heroScore">--</strong><span>Risk score</span></div>
+    </section>
+
+    <section class="grid">
+      <form id="riskForm" class="card form-card">
+        <div class="section-title"><h3>Student Inputs</h3><span>All fields are local</span></div>
+        <label>Attendance (%)<input id="attendance" type="number" min="0" max="100" value="75" required /></label>
+        <label>Average internal marks (%)<input id="marks" type="number" min="0" max="100" value="55" required /></label>
+        <label>Study hours per day<input id="hours" type="number" min="0" max="24" step="0.5" value="2" required /></label>
+        <label>Pending topics / units<input id="backlog" type="number" min="0" max="50" value="5" required /></label>
+        <label>Days remaining for exam<input id="days" type="number" min="1" max="365" value="20" required /></label>
+        <label>Revision consistency (%)<input id="revision" type="number" min="0" max="100" value="45" required /></label>
+        <label>Sleep per night (hours)<input id="sleep" type="number" min="0" max="24" step="0.5" value="6" required /></label>
+        <label>Practice/test completion (%)<input id="practice" type="number" min="0" max="100" value="50" required /></label>
+        <button class="primary" type="submit">Analyze My Risk</button>
+      </form>
+
+      <section class="card results-card">
+        <div class="section-title"><h3>Analysis</h3><span id="statusText">Waiting for input</span></div>
+        <div class="score-wrap"><div id="scoreCircle" class="score-circle"><strong id="score">--</strong><small>/100</small></div><div><h4 id="riskLevel">No analysis yet</h4><p id="riskDescription">Submit the form to calculate your study-risk score.</p></div></div>
+        <div class="meter"><div id="meterFill"></div></div>
+        <div class="mini-grid">
+          <div><span>Academic readiness</span><strong id="readiness">--</strong></div>
+          <div><span>Time pressure</span><strong id="pressure">--</strong></div>
+          <div><span>Consistency</span><strong id="consistency">--</strong></div>
+          <div><span>Routine balance</span><strong id="balance">--</strong></div>
+        </div>
+        <div class="recommendations"><h4>Recommended actions</h4><ul id="recommendations"><li>Recommendations will appear here.</li></ul></div>
+      </section>
+    </section>
+
+    <section class="card plan-card">
+      <div class="section-title"><h3>7-Day Revision Plan</h3><span>Generated from your inputs</span></div>
+      <div id="plan" class="plan-grid"><div class="empty">Run the analysis to generate a plan.</div></div>
+    </section>
+
+    <section class="card iks-card">
+      <div class="section-title"><h3>IKS Connection</h3><span>Indian Knowledge Systems</span></div>
+      <p>This project applies ideas associated with traditional Indian learning practices: <b>niyama</b> (discipline and regularity), reflective self-assessment, teacher-guided learning, and balance between study, rest and daily routine. These ideas are translated into measurable study-habit inputs rather than presented as medical or scientific claims.</p>
+      <div class="iks-pills"><span>Regularity</span><span>Self-assessment</span><span>Holistic routine</span><span>Personalized learning</span></div>
+    </section>
+  </main>
+
+  <footer>Study Risk Analyzer • Educational prototype • No personal data is uploaded or stored on a server</footer>
+  <script src="src/app.js"></script>
+</body>
+</html>

@@ -1,7 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("riskForm");
+  const form =
+    document.getElementById("riskForm") ||
+    document.querySelector("form");
 
   if (!form) return;
+
+  const analyzeButton = [...document.querySelectorAll("button")]
+    .find(btn => btn.textContent.trim().includes("Analyze My Risk"));
+
+  if (analyzeButton) {
+    analyzeButton.addEventListener("click", () => {
+      form.requestSubmit();
+    });
+  }
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -15,17 +26,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const sleep = Number(document.getElementById("sleep").value);
     const practice = Number(document.getElementById("practice").value);
 
-    // Calculate individual readiness factors
     const attendanceScore = Math.min(attendance, 100);
     const marksScore = Math.min(marks, 100);
     const studyScore = Math.min(study * 10, 100);
     const backlogScore = Math.max(0, 100 - backlog * 5);
     const daysScore = Math.min(days * 5, 100);
     const revisionScore = Math.min(revision, 100);
-    const sleepScore = sleep >= 7 ? 100 : sleep >= 6 ? 80 : sleep >= 5 ? 55 : 30;
+    const sleepScore =
+      sleep >= 7 ? 100 :
+      sleep >= 6 ? 80 :
+      sleep >= 5 ? 55 : 30;
     const practiceScore = Math.min(practice, 100);
 
-    // Overall readiness
     const readiness = Math.round(
       attendanceScore * 0.10 +
       marksScore * 0.15 +
@@ -37,24 +49,19 @@ document.addEventListener("DOMContentLoaded", () => {
       practiceScore * 0.10
     );
 
-    // Risk score: higher = more risk
     const risk = Math.max(0, Math.min(100, 100 - readiness));
 
-    // Other indicators
     const pressure = Math.max(
       0,
       Math.min(100, backlog * 8 + Math.max(0, 10 - days) * 5)
     );
 
-    const consistency = Math.round(
-      (revision + practice) / 2
-    );
+    const consistency = Math.round((revision + practice) / 2);
 
     const routineBalance = Math.round(
       (sleepScore + studyScore + revisionScore) / 3
     );
 
-    // Update main score
     setText("heroScore", risk);
     setText("score", risk);
     setText("pressure", Math.round(pressure) + "/100");
@@ -62,7 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setText("readiness", readiness + "%");
     setText("routineBalance", routineBalance + "%");
 
-    // Risk status
     let status = "";
 
     if (risk >= 70) {
@@ -75,49 +81,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setText("statusText", status);
 
-    // Recommendations
-    const recommendations = document.getElementById("recommendations");
+    const recommendations =
+      document.getElementById("recommendations");
 
     if (recommendations) {
       recommendations.innerHTML = "";
 
       const actions = [];
 
-      if (backlog >= 5) {
+      if (backlog >= 5)
         actions.push("Reduce your pending topics by completing at least 1–2 topics every day.");
-      }
 
-      if (study < 3) {
+      if (study < 3)
         actions.push("Increase focused study time gradually to at least 3 hours per day.");
-      }
 
-      if (revision < 50) {
+      if (revision < 50)
         actions.push("Add daily revision instead of studying everything only before exams.");
-      }
 
-      if (practice < 60) {
+      if (practice < 60)
         actions.push("Do more MCQs, previous questions and short practice tests.");
-      }
 
-      if (sleep < 7) {
+      if (sleep < 7)
         actions.push("Try to maintain around 7–8 hours of sleep for better concentration.");
-      }
 
-      if (attendance < 75) {
+      if (attendance < 75)
         actions.push("Improve attendance and avoid missing important lectures.");
-      }
 
-      if (marks < 50) {
+      if (marks < 50)
         actions.push("Focus on weak subjects and review mistakes from previous tests.");
-      }
 
-      if (days <= 7) {
+      if (days <= 7)
         actions.push("Prioritize important and high-weightage units because the exam is close.");
-      }
 
-      if (actions.length === 0) {
+      if (actions.length === 0)
         actions.push("Maintain your current routine and continue regular revision and practice.");
-      }
 
       actions.forEach(action => {
         const li = document.createElement("li");
@@ -126,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Generate 7-day revision plan
     const plan = document.getElementById("plan");
 
     if (plan) {
@@ -157,7 +153,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Scroll to analysis
     const analysis = document.querySelector(".results-card");
 
     if (analysis) {
@@ -168,7 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Reset button
   const resetBtn = document.getElementById("resetBtn");
 
   if (resetBtn) {
@@ -182,20 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
       setText("consistency", "--");
       setText("readiness", "--");
       setText("routineBalance", "--");
-
-      const recommendations = document.getElementById("recommendations");
-
-      if (recommendations) {
-        recommendations.innerHTML =
-          "<li>Recommendations will appear after analysis.</li>";
-      }
-
-      const plan = document.getElementById("plan");
-
-      if (plan) {
-        plan.innerHTML =
-          '<div class="empty">Run the analysis to generate a plan.</div>';
-      }
     });
   }
 

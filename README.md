@@ -56,7 +56,7 @@ This static project can be deployed using GitHub Pages, Netlify or Vercel. After
 ## Student Details
 - Student: Shlok Karande
 - Roll No.: 17053
-- Program: TY IT / IKS Individual Project
+- Program: TY IT / study risk Analyzer 
 - College: S.I.W.S. N.R. Swamy College of Commerce & Economics and Smt. Thirumalai College of Science
 - Academic Year: 2026–27
 - Faculty: Prathamesh sir
